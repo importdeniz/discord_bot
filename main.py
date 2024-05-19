@@ -3,14 +3,21 @@ import discord
 import requests
 import json
 
-BOT_TOKEN = "MTI0MTc5OTE0NDg5NzUxNTU0MA.GAsXNV.hKOKCfQ3pSuZ6ONCLaYqej7UrHv7GIZ-Z1q0xc"
+
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print('Logged on as', self.user)
+
+    async def on_message(self, message):
+        if message.author == self.user:
+            return
+
+        if message.content == 'ping':
+            await message.channel.send('pong')
 
 intents = discord.Intents.default()
 intents.message_content = True
 bot = discord.Client(intents=intents)
-name = None
-did_ask_for_name = False
-
 
 @bot.event
 async def on_message(msg):
@@ -31,4 +38,4 @@ async def on_message(msg):
     else:
         await msg.channel.send('Hallo ' + name)
 
-bot.run(BOT_TOKEN)
+bot.run(os.environ['BOT_TOKEN'])
