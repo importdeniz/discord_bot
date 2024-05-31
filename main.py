@@ -2,11 +2,12 @@ import os
 import discord
 import requests
 import json
+from keep_alive import keep_alive
 
 # Provide a bot Token
 TOKEN = os.environ.get('BOT_TOKEN') # get the bot token from the environment variable
 BOT_PREFIX = 'bot ' # the prefix for the bot commands
-
+print(TOKEN)
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -20,6 +21,8 @@ did_ask_for_name = False
 
 
 @bot.event
+async def on_ready():
+    await bot.change_presence(activity=discord.Game(name="Listening to your commands!"))
 async def on_message(msg):
     global name, did_ask_for_name
     if msg.author == bot.user:
@@ -39,7 +42,8 @@ async def on_message(msg):
         await msg.channel.send('Hallo! Wie heißt du?')
     else:
         await msg.channel.send('Hallo ' + name)
-            
+
         
 if __name__ == '__main__':
+    keep_alive()
     bot.run(TOKEN)
