@@ -6,7 +6,7 @@ from keep_alive import keep_alive
 
 # Provide a bot Token
 TOKEN = os.environ.get('BOT_TOKEN') # get the bot token from the environment variable
-BOT_PREFIX = 'bot ' # the prefix for the bot commands
+BOT_PREFIX = 'rizzler ' # the prefix for the bot commands
 print(TOKEN)
 
 intents = discord.Intents.default()
